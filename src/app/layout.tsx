@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 // import localFont from "next/font/local";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import { SessionProvider } from "next-auth/react";
 import ThemeProvider from "@/components/Theme";
-import Navbar from "@/components/navigation/navbar";
+import { Toaster } from "@/components/ui/toaster";
+import { auth } from "@/auth";
 
 // const geistSans = localFont({
 // 	src: "./fonts/GeistVF.woff",
@@ -31,21 +33,27 @@ export const metadata: Metadata = {
 	},
 };
 
-export default function RootLayout({
+const RootLayout = async ({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
-}>) {
+}>) => {
+	const session = await auth();
+
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<body
-				className={`${inter.className} ${spaceGrotesk.variable} antialiased`}
-			>
-				<ThemeProvider attribute={"class"} defaultTheme="system" enableSystem>
-					<Navbar />
-					{children}
-				</ThemeProvider>
-			</body>
+			<SessionProvider session={session}>
+				<body
+					className={`${inter.className} ${spaceGrotesk.variable} antialiased`}
+				>
+					<ThemeProvider attribute={"class"} defaultTheme="system" enableSystem>
+						{children}
+						<Toaster />
+					</ThemeProvider>
+				</body>
+			</SessionProvider>
 		</html>
 	);
-}
+};
+
+export default RootLayout;
