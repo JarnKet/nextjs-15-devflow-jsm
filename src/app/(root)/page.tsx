@@ -8,30 +8,17 @@ import { auth, signOut } from "@/auth";
 import ROUTES from "@/constants/routes";
 
 const Home = async () => {
-	console.log("Hi I'm Server Component");
+  console.log("Hi I'm Server Component");
 
-	const session = await auth();
+  const session = await auth();
 
-	console.log(session, "session");
+  console.log(session, "session");
 
-	return (
-		<>
-			<h1>Hi</h1>
-
-			<form
-				className="px-10 pt-[100px]"
-				action={async () => {
-					"use server";
-
-					await signOut({
-						redirectTo: ROUTES.SIGN_IN,
-					});
-				}}
-			>
-				<Button type="submit">Log out</Button>
-			</form>
-		</>
-	);
+  return (
+    <>
+      <h1>Hi</h1>
+    </>
+  );
 };
 
 export default Home;
