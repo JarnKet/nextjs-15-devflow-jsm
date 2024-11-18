@@ -6,7 +6,7 @@ import Image from "next/image";
 // UI
 import { SheetClose } from "@/components/ui/sheet";
 
-// Utils
+// Utilse
 import { cn } from "@/lib/utils";
 import { sidebarLinks } from "@/constants";
 
